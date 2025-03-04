@@ -6,6 +6,17 @@ def compare_excel_files(file1, file2, index_cols):
     df1 = pd.read_excel(file1)
     df2 = pd.read_excel(file2)
 
+    # 按照索引列-检查行重复
+    duplicate_rows1 = df1[df1.duplicated(subset=index_cols)]
+    duplicate_rows2 = df2[df2.duplicated(subset=index_cols)]
+    
+    if not duplicate_rows1.empty:
+        print(f"文件1,按照索引列 {index_cols},重复行: {len(duplicate_rows1)}")
+        return
+    if not duplicate_rows2.empty:
+        print(f"文件2,按照索引列 {index_cols},重复行: {len(duplicate_rows2)}")
+        return
+        
     # 设置指定列作为索引
     df1 = df1.set_index(index_cols)
     df2 = df2.set_index(index_cols)
